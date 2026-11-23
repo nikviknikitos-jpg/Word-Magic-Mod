@@ -13,7 +13,7 @@ import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.IronGolemEntityModel;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.monster.BlazeEntity;
+import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -73,3 +73,4 @@ public class WordMagicClient implements ClientModInitializer {
         });
     }
 }
+
