@@ -377,7 +377,7 @@ public class WordEffects {
                 BlockPos t = bp.add(dx, dy, dz);
                 if (sw.getBlockState(t).isOf(Blocks.GRASS_BLOCK) || sw.getBlockState(t).isOf(Blocks.DIRT)) {
                     if (sw.getBlockState(t.up()).isAir() && sw.random.nextInt(4) == 0) {
-                        sw.setBlockState(t.up(), Blocks.SHORT_GRASS.getDefaultState());
+                        sw.setBlockState(t.up(), Blocks.GRASS.getDefaultState());
                     }
                 }
             }
@@ -494,3 +494,4 @@ public class WordEffects {
         }
     }
 }
+
