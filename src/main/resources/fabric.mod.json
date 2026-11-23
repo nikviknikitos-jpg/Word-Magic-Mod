@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "wordmagic",
+  "version": "${version}",
+  "name": "Ancient Word Magic",
+  "description": "10 Tomes of the Archmage, 50 Ancient Word spells, Rune Guardian, Shadow Cultist, Ancient Colossus boss.",
+  "authors": ["Example"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.example.wordmagic.WordMagicMod"],
+    "client": ["com.example.wordmagic.client.WordMagicClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}
