@@ -1,5 +1,6 @@
 package com.example.wordmagic.client;
 
+import net.minecraft.client.render.entity.BipedEntityRenderer;
 import com.example.wordmagic.network.SpellSync;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -37,11 +38,13 @@ public class WordMagicClient implements ClientModInitializer {
         });
         HudRenderCallback.EVENT.register(new ManaHudRenderer());
         EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.RUNE_GUARDIAN,
-                ctx -> new MobEntityRenderer(
+                ctx -> new BipedEntityRenderer(
         ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 1.0f) {
-                    @Override public Identifier getTexture(com.example.wordmagic.entity.RuneGuardianEntity e) {
-                        return new Identifier("minecraft", "textures/entity/iron_golem/iron_golem.png");
-                    }
+    @Override
+    public Identifier getTexture(com.example.wordmagic.entity.RuneGuardianEntity entity) {
+        return new Identifier("minecraft", "textures/entity/zombie/zombie.png");
+    }
+}
                 });
         EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.SHADOW_CULTIST,
                 ctx -> new MobEntityRenderer<com.example.wordmagic.entity.ShadowCultistEntity, BlazeEntityModel<com.example.wordmagic.entity.ShadowCultistEntity>>(
@@ -73,5 +76,6 @@ public class WordMagicClient implements ClientModInitializer {
         });
     }
 }
+
 
 
