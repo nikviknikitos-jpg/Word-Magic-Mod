@@ -1,6 +1,9 @@
 package com.example.wordmagic.client;
 
-import net.minecraft.client.render.entity.BipedEntityRenderer;
+import com.example.wordmagic.entity.AncientColossusEntity;
+import com.example.wordmagic.entity.ModEntities;
+import com.example.wordmagic.entity.RuneGuardianEntity;
+import com.example.wordmagic.entity.ShadowCultistEntity;
 import com.example.wordmagic.network.SpellSync;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -9,12 +12,12 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -37,30 +40,35 @@ public class WordMagicClient implements ClientModInitializer {
             }
         });
         HudRenderCallback.EVENT.register(new ManaHudRenderer());
-        EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.RUNE_GUARDIAN,
-                ctx -> new BipedEntityRenderer(
-        ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 1.0f) {
-    @Override
-    public Identifier getTexture(com.example.wordmagic.entity.RuneGuardianEntity entity) {
-        return new Identifier("minecraft", "textures/entity/zombie/zombie.png");
-    }
-}
+
+        EntityRendererRegistry.register(ModEntities.RUNE_GUARDIAN,
+                ctx -> new BipedEntityRenderer<RuneGuardianEntity, BipedEntityModel<RuneGuardianEntity>>(
+                        ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 1.0f) {
+                    @Override
+                    public Identifier getTexture(RuneGuardianEntity entity) {
+                        return new Identifier("minecraft", "textures/entity/zombie/zombie.png");
+                    }
                 });
-        EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.SHADOW_CULTIST,
-                ctx -> new MobEntityRenderer<com.example.wordmagic.entity.ShadowCultistEntity, BlazeEntityModel<com.example.wordmagic.entity.ShadowCultistEntity>>(
+
+        EntityRendererRegistry.register(ModEntities.SHADOW_CULTIST,
+                ctx -> new MobEntityRenderer<ShadowCultistEntity, BlazeEntityModel<ShadowCultistEntity>>(
                         ctx, new BlazeEntityModel<>(ctx.getPart(EntityModelLayers.BLAZE)), 0.9f) {
-                    @Override public Identifier getTexture(com.example.wordmagic.entity.ShadowCultistEntity e) {
+                    @Override
+                    public Identifier getTexture(ShadowCultistEntity e) {
                         return new Identifier("minecraft", "textures/entity/blaze.png");
                     }
                 });
-        EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.ANCIENT_COLOSSUS,
-                ctx -> new MobEntityRenderer(
-        ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 3.0f) {
-                    @Override public Identifier getTexture(com.example.wordmagic.entity.AncientColossusEntity e) {
-                        return new Identifier("minecraft", "textures/entity/iron_golem/iron_golem.png");
+
+        EntityRendererRegistry.register(ModEntities.ANCIENT_COLOSSUS,
+                ctx -> new BipedEntityRenderer<AncientColossusEntity, BipedEntityModel<AncientColossusEntity>>(
+                        ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 3.0f) {
+                    @Override
+                    public Identifier getTexture(AncientColossusEntity e) {
+                        return new Identifier("minecraft", "textures/entity/zombie/husk.png");
                     }
                 });
-        EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.WORD_PROJECTILE,
+
+        EntityRendererRegistry.register(ModEntities.WORD_PROJECTILE,
                 ctx -> new WordProjectileRenderer(ctx));
 
         ClientPlayNetworking.registerGlobalReceiver(SpellSync.CHANNEL, (client, handler, buf, sender) -> {
@@ -70,12 +78,11 @@ public class WordMagicClient implements ClientModInitializer {
             int mana = buf.readInt();
             int active = buf.readInt();
             client.execute(() -> {
-                KNOWN.clear(); KNOWN.addAll(set);
-                MANA = mana; ACTIVE = active;
+                KNOWN.clear();
+                KNOWN.addAll(set);
+                MANA = mana;
+                ACTIVE = active;
             });
         });
     }
 }
-
-
-
