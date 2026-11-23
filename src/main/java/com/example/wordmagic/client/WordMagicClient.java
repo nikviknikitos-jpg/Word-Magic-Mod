@@ -11,7 +11,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.IronGolemEntityModel;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
@@ -37,8 +37,8 @@ public class WordMagicClient implements ClientModInitializer {
         });
         HudRenderCallback.EVENT.register(new ManaHudRenderer());
         EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.RUNE_GUARDIAN,
-                ctx -> new MobEntityRenderer<com.example.wordmagic.entity.RuneGuardianEntity, IronGolemEntityModel<com.example.wordmagic.entity.RuneGuardianEntity>>(
-                        ctx, new IronGolemEntityModel<>(ctx.getPart(EntityModelLayers.IRON_GOLEM)), 1.0f) {
+                ctx -> new MobEntityRenderer(
+        ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 1.0f) {
                     @Override public Identifier getTexture(com.example.wordmagic.entity.RuneGuardianEntity e) {
                         return new Identifier("minecraft", "textures/entity/iron_golem/iron_golem.png");
                     }
@@ -51,8 +51,8 @@ public class WordMagicClient implements ClientModInitializer {
                     }
                 });
         EntityRendererRegistry.register(com.example.wordmagic.entity.ModEntities.ANCIENT_COLOSSUS,
-                ctx -> new MobEntityRenderer<com.example.wordmagic.entity.AncientColossusEntity, IronGolemEntityModel<com.example.wordmagic.entity.AncientColossusEntity>>(
-                        ctx, new IronGolemEntityModel<>(ctx.getPart(EntityModelLayers.IRON_GOLEM)), 3.0f) {
+                ctx -> new MobEntityRenderer(
+        ctx, new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER)), 3.0f) {
                     @Override public Identifier getTexture(com.example.wordmagic.entity.AncientColossusEntity e) {
                         return new Identifier("minecraft", "textures/entity/iron_golem/iron_golem.png");
                     }
@@ -73,4 +73,5 @@ public class WordMagicClient implements ClientModInitializer {
         });
     }
 }
+
 
